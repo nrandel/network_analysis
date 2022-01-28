@@ -32,6 +32,6 @@ bool_array = us_2hop_neurons.num_nodes>500
 us_2hop_neurons_filtered = us_2hop_neurons[bool_array]
 
 # could also filter by skeleton ID; kind of silly example
-bool_array = us_2hop_neurons.skeleton_id=='17360038'
+bool_array = us_2hop_neurons.skeleton_id=='17378483'
 us_particular_neuron = us_2hop_neurons[bool_array]
 # %%
