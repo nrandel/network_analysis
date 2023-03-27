@@ -38,12 +38,12 @@ ds_2hop_neurons = pymaid.get_partners(ds_neurons.skeleton_id, directions=['outgo
 # %%
 # cascade using CATMAID (can be done with csv as well) https://github.com/mwinding/connectome_tools/blob/main/examples/cascade_example.ipynb
 
-name = 'LE cascade' 
-source_skids = pymaid.get_skids_by_annotation('eyespot_PRC') 
-stop_skids = pymaid.get_skids_by_annotation(['muscle', 'ciliated cell'])
+name = 'XXX cascade' 
+source_skids = pymaid.get_skids_by_annotation('celltype1') 
+stop_skids = pymaid.get_skids_by_annotation('motorneuron')
 adj = pd.read_csv('data/adj/naomi_celltype_all-to-all.csv', index_col = 0)
 adj.columns = [int(x[2:-1]) for x in adj.columns]
-p = 0.10 # originally 0.05 in Drosophila dataset
+p = 0.15 # originally 0.05 in Drosophila dataset
 max_hops = 10
 n_init = 100
 simultaneous = True
