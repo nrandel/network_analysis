@@ -4,3 +4,4 @@ __pycache__
 seymour_creds.py
 naomi_creds.py
 data
+data_settings.py
