@@ -17,18 +17,20 @@ pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
 # brain hemisphere and their neurites in the order. You can deactivate this behaviour with flip_weirdos=False
 
 # %%
+# downstream
 # when looking at multihop connectivity with a threshold using individual neuron edge list (not the paired list); TESTED AND WORKING
 
-neurons = pymaid.get_skids_by_annotation('nr test 5_1099-neuron 65408/65845') # Tel-like 10
+neurons = pymaid.get_skids_by_annotation('nr test3/13_1099-neuron 11729/24010') # Tel-like 10
 
 # use pregenerated edge list
 edges = Promat.pull_edges(type_edges='ad', threshold=0.01, data_date=data_date_A1_brain, pairs_combined=False)
 pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
 
 # downstream x-hops of Tel-like 10
-downstream = Promat.downstream_multihop(edges=edges, sources=neurons, hops=2, pairs_combined=False, pairs=pairs)
+downstream = Promat.downstream_multihop(edges=edges, sources=neurons, hops=1, pairs_combined=False, pairs=pairs)
 
 # %%
+# downstream
 # when looking at multihop connectivity with a threshold using paired-neuron edge list; TESTED AND WORKING 
 # (not individual neurons; note that pair_ID refers to the left skid of a pair)
 
@@ -39,4 +41,17 @@ edges = Promat.pull_edges(type_edges='ad', threshold=0.01, data_date=data_date_A
 
 # downstream 3-hops of Tel-like 10
 downstream = Promat.downstream_multihop(edges=edges, sources=neurons, hops=2, pairs_combined=True)
+# %%
+# upstream
+# when looking at multihop connectivity with a threshold using individual neuron edge list (not the paired list); TESTED AND WORKING
+
+neurons = pymaid.get_skids_by_annotation('nr test3/13_1099-neuron 11729/24010') # Tel-like 10
+
+# use pregenerated edge list
+edges = Promat.pull_edges(type_edges='ad', threshold=0.01, data_date=data_date_A1_brain, pairs_combined=False)
+pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
+
+# upstream x-hops of Tel-like 10
+upstream = Promat.upstream_multihop(edges=edges, sources=neurons, hops=1, pairs_combined=False, pairs=pairs)
+
 # %%
