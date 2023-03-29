@@ -19,13 +19,13 @@ pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
 # %%
 # when looking at multihop connectivity with a threshold using individual neuron edge list (not the paired list); TESTED AND WORKING
 
-neurons = pymaid.get_skids_by_annotation('nr Tel-like 10') # Tel-like 10
+neurons = pymaid.get_skids_by_annotation('nr test 5_1099-neuron 65408/65845') # Tel-like 10
 
 # use pregenerated edge list
 edges = Promat.pull_edges(type_edges='ad', threshold=0.01, data_date=data_date_A1_brain, pairs_combined=False)
 pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
 
-# downstream 3-hops of Tel-like 10
+# downstream x-hops of Tel-like 10
 downstream = Promat.downstream_multihop(edges=edges, sources=neurons, hops=2, pairs_combined=False, pairs=pairs)
 
 # %%
