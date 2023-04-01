@@ -52,22 +52,47 @@ edges = Promat.pull_edges(type_edges='ad', threshold=0.01, data_date=data_date_A
 pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
 
 # upstream x-hops of Tel-like 10
-upstream = Promat.upstream_multihop(edges=edges, sources=neurons, hops=3, pairs_combined=False, pairs=pairs)
+upstream = Promat.upstream_multihop(edges=edges, sources=neurons, hops=2, pairs_combined=False, pairs=pairs)
 
 # %%
 #TEST add annotations to a list of skids (missing permission for now)
 
 pymaid.add_annotations([6572414, 5747036], ['nr test for adding annotations'])
 # %%
-#TEST save/print output to csv
+#save output to csv
 # output is list of lists and therefore the range need to be chosen. E.g., For 3-hop = upstream[2]
 
 import csv
 
 # Define data
-test = pd.DataFrame(upstream[2])
+data = pd.DataFrame(upstream[2])
 
-test.to_csv('/Users/nadine/Documents/paper/single-larva/generated-data/3-hop.csv', index=False)
+data.to_csv('/Users/nadine/Documents/paper/single-larva/generated-data/3-hop.csv', index=False)
 
+# %%
+#Concatenate df NOT WORKING (wrong output)
+
+data1 = pd.DataFrame(upstream)
+df = [data1[0], data1[1]]
+df2 = pd.concat(df)
+df2.to_csv('/Users/nadine/Documents/paper/single-larva/generated-data/1_to_2-hop.csv', index=False)
+
+# %%
+# %%
+#TESTING
+# Intersection of upstream and downstream multihop connection using annotoations
+
+# load skids for particular annotation
+source = pymaid.get_skids_by_annotation('nr FW') #FW: forward triggering cells; TC: turn triggereing cells
+target = pymaid.get_skids_by_annotation('nr test 6_1099-neuron 62653/70584_1-TO-2-hop upstream')
+
+# identify multihop-path (mhp) between neuron source and target (~graph widget)
+mhp = np.intersect1d(source, target)
+
+# convert to panda and save as csv
+# Define data
+data = pd.DataFrame(mhp)
+
+data.to_csv('/Users/nadine/Documents/paper/single-larva/generated-data/intersection_source-target.csv', index=False)
 
 # %%
