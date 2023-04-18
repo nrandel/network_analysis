@@ -6,7 +6,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from contools import Celltype, Celltype_Analyzer, Promat, Analyze_Nx_G, Analyze_Cluster
-from data_settings import data_date, pairs_path
+from data_settings import data_date_A1_brain, pairs_path
 
 from seymour_creds import url, name, password, token
 import pymaid
@@ -18,15 +18,50 @@ import networkx as nx
 # load previously generated edge lists with pairwise threshold
 # see 'network_analysis/generate_all_edges.py'
 
-edge_list_ad = Promat.pull_edges(type_edges='ad', data_date=data_date, pairs_combined=False, threshold=0.01)
+edge_list_ad = Promat.pull_edges(type_edges='ad', data_date=data_date_A1_brain, pairs_combined=True, threshold=0.01)
 
 # load edge list into the networkX graph
-Gad = Analyze_Nx_G(edge_list_ad, graph_type='directed', split_pairs=True)
+Gad = Analyze_Nx_G(edge_list_ad, graph_type='directed', split_pairs=False)
 G = Gad.G
 
-source_skids = pymaid.get_skids_by_annotation('nr FW ipsigoro')
+source_skids = pymaid.get_skids_by_annotation('nr TC MBE5a')
 target_skids = pymaid.get_skids_by_annotation('nr test 6_1099-neuron 62653/70584')
 
-nx.all_shortest_paths(G=G, source=source_skids, target=target_skids)
+source_skids = np.intersect1d(source_skids, G.nodes)
+target_skids = np.intersect1d(target_skids, G.nodes)
+
+#paths = nx.all_shortest_paths(G=G, source=source_skids[0], target=target_skids[0])
+paths = nx.all_simple_paths(G=G, source=source_skids[0], target=target_skids[0], cutoff=3)
+paths = list(paths)
+# %%
+# check if scource_skids are in G
+source_skids = np.intersect1d(source_skids, G.nodes)
+
+
+# %%
+# list comprehension example
+source_skids = pymaid.get_skids_by_annotation('nr TC')
+
+paths_list = [x*100 for x in source_skids]
+
+# same as `paths_list = [x*100 for x in source_skids]`
+paths_list = []
+for x in source_skids:
+    paths = x*100
+    paths_list.append(paths)
+
+# %%
+# multiple sources in nx.all_shortest_paths
+
+source_skids = pymaid.get_skids_by_annotation('nr TC')
+target_skid = pymaid.get_skids_by_annotation('nr test 6_1099-neuron 62653/70584')
+
+source_skids = np.intersect1d(source_skids, G.nodes)
+target_skid = np.intersect1d(target_skids, G.nodes)[0]
+
+#paths_list = [nx.all_shortest_paths(G=G, source=skid, target=target_skid) for skid in source_skids]
+paths_list = [nx.all_simple_paths(G=G, source=skid, target=target_skid, cutoff=3) for skid in source_skids]
+paths_list = [list(x) for x in paths_list]
+# if there is no path, there is some problem with the last step (for all_shortest_paths)
 
 # %%
