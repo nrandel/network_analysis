@@ -1,0 +1,32 @@
+
+# %%
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from contools import Celltype, Celltype_Analyzer, Promat, Analyze_Nx_G, Analyze_Cluster
+from data_settings import data_date, pairs_path
+
+from seymour_creds import url, name, password, token
+import pymaid
+rm = pymaid.CatmaidInstance(url, token, name, password)
+import networkx as nx
+
+
+# %%
+# load previously generated edge lists with pairwise threshold
+# see 'network_analysis/generate_all_edges.py'
+
+edge_list_ad = Promat.pull_edges(type_edges='ad', data_date=data_date, pairs_combined=False, threshold=0.01)
+
+# load edge list into the networkX graph
+Gad = Analyze_Nx_G(edge_list_ad, graph_type='directed', split_pairs=True)
+G = Gad.G
+
+source_skids = pymaid.get_skids_by_annotation('nr FW ipsigoro')
+target_skids = pymaid.get_skids_by_annotation('nr test 6_1099-neuron 62653/70584')
+
+nx.all_shortest_paths(G=G, source=source_skids, target=target_skids)
+
+# %%
