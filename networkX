@@ -51,7 +51,7 @@ for x in source_skids:
     paths_list.append(paths)
 
 # %%
-# multiple sources in nx.all_shortest_paths
+# multiple sources in nx.all_shortest_paths/ nx.all_simple_paths
 
 source_skids = pymaid.get_skids_by_annotation('nr TC')
 target_skid = pymaid.get_skids_by_annotation('nr test 6_1099-neuron 62653/70584')
