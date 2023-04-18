@@ -20,14 +20,14 @@ pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
 # downstream
 # when looking at multihop connectivity with a threshold using individual neuron edge list (not the paired list); TESTED AND WORKING
 
-neurons = pymaid.get_skids_by_annotation('nr TC') # Tel-like 10, nr FW: forward triggering cells; nr TC: turn triggereing cells
+neurons = pymaid.get_skids_by_annotation('nr FW R1: upstream of telephone') # Tel-like 10, nr FW: forward triggering cells; nr TC: turn triggereing cells
 
 # use pregenerated edge list
 edges = Promat.pull_edges(type_edges='ad', threshold=0.01, data_date=data_date_A1_brain, pairs_combined=False)
 pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
 
 # downstream x-hops of Tel-like 10
-downstream = Promat.downstream_multihop(edges=edges, sources=neurons, hops=3, pairs_combined=False, pairs=pairs)
+downstream = Promat.downstream_multihop(edges=edges, sources=neurons, hops=1, pairs_combined=False, pairs=pairs)
 
 # %%
 # downstream
@@ -45,14 +45,14 @@ downstream = Promat.downstream_multihop(edges=edges, sources=neurons, hops=2, pa
 # upstream
 # when looking at multihop connectivity with a threshold using individual neuron edge list (not the paired list); TESTED AND WORKING
 
-neurons = pymaid.get_skids_by_annotation('nr test3/13_1099-neuron 11729/24010') # Tel-like 10
+neurons = pymaid.get_skids_by_annotation('nr test 90/89_1099-neuron 62454/81862') # Tel-like 10
 
 # use pregenerated edge list
 edges = Promat.pull_edges(type_edges='ad', threshold=0.01, data_date=data_date_A1_brain, pairs_combined=False)
 pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
 
 # upstream x-hops of Tel-like 10
-upstream = Promat.upstream_multihop(edges=edges, sources=neurons, hops=2, pairs_combined=False, pairs=pairs)
+upstream = Promat.upstream_multihop(edges=edges, sources=neurons, hops=3, pairs_combined=False, pairs=pairs)
 
 # %%
 #TEST add annotations to a list of skids (missing permission for now)
@@ -85,25 +85,28 @@ df2.to_csv('/Users/nadine/Documents/paper/single-larva/generated-data/1_to_2-hop
 # and target 1-TO-n hops upstream
 
 # load skids for particular annotation
-source = pymaid.get_skids_by_annotation('nr TC AF12_Ex2') #FW: forward triggering cells; TC: turn triggereing cells
-target = pymaid.get_skids_by_annotation('nr test3/13_1099-neuron 11729/24010 3-hop upstream')
+source = pymaid.get_skids_by_annotation('nr FW R1: upstream of telephone_1-hop downstream') #FW: forward triggering cells; TC: turn triggereing cells
+target = pymaid.get_skids_by_annotation('nr test 6_1099-neuron 62653/70584_2-hop upstream')
 
 # identify multihop-path (mhp) between neuron source and target (~graph widget)
 mhp = np.intersect1d(source, target)
 
 # convert to panda and save as csv
 # Define data
-#data = pd.DataFrame(mhp)
+data = pd.DataFrame(mhp)
 
-#data.to_csv('/Users/nadine/Documents/paper/single-larva/generated-data/intersection_source-target.csv', index=False)
+data.to_csv('/Users/nadine/Documents/paper/single-larva/generated-data/intersection_source-target.csv', index=False)
 
 # %%
-#intersect FW1-3hops and TC 1-3hops! (TODO)
+#intersect FW1-3hops and TC 1-3hops
+# for meta-annotation 'mw primary neurotransmitter' [NOT WORKING];
+# or annotations 'mw cholinergic', 'mw GABAergic' and 'mw glutamatergic'
 
 # load skids for particular annotation
-group1 = pymaid.get_skids_by_annotation('nr 1-TO-3_hops_downstream_nr-FW') 
-group2 = pymaid.get_skids_by_annotation('nr 1-TO-3_hops_downstream_nr-TC')
+group1 = pymaid.get_skids_by_annotation('mw glutamatergic') #e.g., nr 1-TO-3_hops_downstream_nr-FW
+group2 = pymaid.get_skids_by_annotation('nr TC') # e.g., nr 1-TO-3_hops_downstream_nr-TC
 
 # identify intersection between two groups of neuronns
 gi = np.intersect1d(group1, group2)
 # %%
+#NetworkX
