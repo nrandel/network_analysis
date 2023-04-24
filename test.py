@@ -2,6 +2,7 @@
 from seymour_creds import url, name, password, token
 import pymaid
 import numpy as np
+import pandas as pd
 
 rm = pymaid.CatmaidInstance(server=url, api_token=token, http_user=name, http_password=password)
 
@@ -34,4 +35,39 @@ us_2hop_neurons_filtered = us_2hop_neurons[bool_array]
 # could also filter by skeleton ID; kind of silly example
 bool_array = us_2hop_neurons.skeleton_id=='17378483'
 us_particular_neuron = us_2hop_neurons[bool_array]
+# %%
+
+# compare two lists (csv) and get match
+# import csv
+
+nr = pd.read_csv('/Users/nadine/Documents/paper/single-larva/generated-data/1-hop_upstream_nr_test-6_1099-neuron-62653-70584.csv')
+lv = pd.read_csv('/Users/nadine/Documents/paper/single-larva/Left-skids_NBLAST_CleanBrain.csv')
+
+matched = set(nr) & set(lv)
+
+# %%
+# example: compare two lists and get match
+a = [1, 2, 3, 5, 4, 22]
+b = [9, 8, 7, 6, 5, 22]
+m = set(a) & set(b)
+# %%
+
+with open("/Users/nadine/Documents/paper/single-larva/Left-skids_NBLAST_CleanBrain.csv", 'r') as f:
+    ids_of_interest = []
+    _ = f.readline() # skip first line
+    for line in f:
+        id = line.rstrip()
+        ids_of_interest.append(id)
+print(ids_of_interest)        
+
+# %%
+
+with open("/Users/nadine/Documents/paper/single-larva/generated-data/1-hop_upstream_nr-test6_1099-neuron-32240-50631.csv", 'r') as f:
+    catmaid_neurons = []
+    for line in f:
+        #print(line.rstrip())
+        id, _ = line.rstrip().lstrip().split(',') #remove spaces and new lines on left and right side, and splitting (split returns list of strings) on the comma. '_' we ignore this variable 
+        
+        catmaid_neurons.append(id)
+print(catmaid_neurons)    
 # %%
