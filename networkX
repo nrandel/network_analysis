@@ -54,13 +54,13 @@ for x in source_skids:
 # multiple sources in nx.all_shortest_paths/ nx.all_simple_paths
 
 source_skids = pymaid.get_skids_by_annotation('nr FW')
-target_skid = pymaid.get_skids_by_annotation('nr test 5_1099-neuron 65408/65845')
+target_skid = pymaid.get_skids_by_annotation('nr test9/19_1099-neuron 26236/57617')
 
 source_skids = np.intersect1d(source_skids, G.nodes)
 target_skid = np.intersect1d(target_skid, G.nodes)[0]
 
 #paths_list = [nx.all_shortest_paths(G=G, source=skid, target=target_skid) for skid in source_skids]
-paths_list = [nx.all_simple_paths(G=G, source=skid, target=target_skid, cutoff=3) for skid in source_skids]
+paths_list = [nx.all_simple_paths(G=G, source=skid, target=target_skid, cutoff=2) for skid in source_skids]
 paths_list = [list(x) for x in paths_list]
 # if there is no path, there is some problem with the last step (for all_shortest_paths)
 

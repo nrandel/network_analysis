@@ -35,15 +35,6 @@ us_2hop_neurons_filtered = us_2hop_neurons[bool_array]
 # could also filter by skeleton ID; kind of silly example
 bool_array = us_2hop_neurons.skeleton_id=='17378483'
 us_particular_neuron = us_2hop_neurons[bool_array]
-# %%
-
-# compare two lists (csv) and get match
-# import csv
-
-nr = pd.read_csv('/Users/nadine/Documents/paper/single-larva/generated-data/1-hop_upstream_nr_test-6_1099-neuron-62653-70584.csv')
-lv = pd.read_csv('/Users/nadine/Documents/paper/single-larva/Left-skids_NBLAST_CleanBrain.csv')
-
-matched = set(nr) & set(lv)
 
 # %%
 # example: compare two lists and get match
@@ -58,16 +49,33 @@ with open("/Users/nadine/Documents/paper/single-larva/Left-skids_NBLAST_CleanBra
     for line in f:
         id = line.rstrip()
         ids_of_interest.append(id)
-print(ids_of_interest)        
+#print(ids_of_interest)        
 
 # %%
 
-with open("/Users/nadine/Documents/paper/single-larva/generated-data/1-hop_upstream_nr-test6_1099-neuron-32240-50631.csv", 'r') as f:
+with open("/Users/nadine/Documents/paper/single-larva/generated-data/2-hop_downstream_nr_test-9-19_1099-neuron_26236-57617.csv", 'r') as f:
     catmaid_neurons = []
     for line in f:
         #print(line.rstrip())
         id, _ = line.rstrip().lstrip().split(',') #remove spaces and new lines on left and right side, and splitting (split returns list of strings) on the comma. '_' we ignore this variable 
         
         catmaid_neurons.append(id)
-print(catmaid_neurons)    
+#print(catmaid_neurons)    
+# %%
+# compare two lists. output matched values
+
+matched = set(catmaid_neurons) & set(ids_of_interest)
+# %%
+
+with open("/Users/nadine/Documents/paper/single-larva/generated-data/pre-post_lines.csv", 'r') as f:
+    spliline_neurons = []
+    for line in f:
+        #print(line.rstrip())
+        id = line.rstrip().lstrip() #remove spaces and new lines on left and right side 
+        
+        spliline_neurons.append(id)
+#print(spliline_neurons)
+
+# output: remove duplicates in list
+unique = list(set(spliline_neurons))
 # %%
