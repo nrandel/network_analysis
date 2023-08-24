@@ -21,14 +21,14 @@ pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
 # downstream
 # when looking at multihop connectivity with a threshold using individual neuron edge list (not the paired list); TESTED AND WORKING
 
-neurons = pymaid.get_skids_by_annotation('nr test9/19_1099-neuron 26236/57617') # Tel-like 10, nr FW: forward triggering cells; nr TC: turn triggereing cells
+neurons = pymaid.get_skids_by_annotation('nr test 4_1099-neuron 35672/66113') # Tel-like 10, nr FW: forward triggering cells; nr TC: turn triggereing cells
 
 # use pregenerated edge list
 edges = Promat.pull_edges(type_edges='ad', threshold=0.01, data_date=data_date_A1_brain, pairs_combined=False)
 pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
 
 # downstream x-hops of Tel-like 10
-downstream = Promat.downstream_multihop(edges=edges, sources=neurons, hops=2, pairs_combined=False, pairs=pairs)
+downstream = Promat.downstream_multihop(edges=edges, sources=neurons, hops=1, pairs_combined=False, pairs=pairs)
 
 # %%
 # downstream
@@ -43,11 +43,11 @@ edges = Promat.pull_edges(type_edges='ad', threshold=0.01, data_date=data_date_A
 # downstream 3-hops of Tel-like 10
 downstream = Promat.downstream_multihop(edges=edges, sources=neurons, hops=2, pairs_combined=True)
 # %%
-# USE THIS (INDIVIDUAL NEURON LIST) FOR RANDEL et al 2023
 # upstream
+# USE THIS (INDIVIDUAL NEURON LIST) FOR RANDEL et al 2023
 # when looking at multihop connectivity with a threshold using individual neuron edge list (not the paired list); TESTED AND WORKING
 
-neurons = pymaid.get_skids_by_annotation('nr test9/19_1099-neuron 26236/57617') # Tel-like 10
+neurons = pymaid.get_skids_by_annotation('nr test 35/29_1099-neuron 33923/25217') # Tel-like 10
 
 # use pregenerated edge list
 edges = Promat.pull_edges(type_edges='ad', threshold=0.01, data_date=data_date_A1_brain, pairs_combined=False)

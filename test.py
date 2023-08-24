@@ -9,6 +9,7 @@ rm = pymaid.CatmaidInstance(server=url, api_token=token, http_user=name, http_pa
 
 # %%
 
+# OLD
 # load skids for particular annotation
 neurons = pymaid.get_skids_by_annotation('nr Tel-like 10')
 
@@ -37,6 +38,7 @@ bool_array = us_2hop_neurons.skeleton_id=='17378483'
 us_particular_neuron = us_2hop_neurons[bool_array]
 
 # %%
+# USE CODE BELOW TO IDENTIFY WHICH NEURONS FROM CATMAID (e.g. 1 hop upstream of Tele-like 10) == activation screen
 # example: compare two lists and get match
 a = [1, 2, 3, 5, 4, 22]
 b = [9, 8, 7, 6, 5, 22]
@@ -53,7 +55,7 @@ with open("/Users/nadine/Documents/paper/single-larva/Left-skids_NBLAST_CleanBra
 
 # %%
 
-with open("/Users/nadine/Documents/paper/single-larva/generated-data/2-hop_downstream_nr_test-9-19_1099-neuron_26236-57617.csv", 'r') as f:
+with open("/Users/nadine/Documents/paper/single-larva/generated-data/2-hop_upstream_nrtest_35-29_1099-neuron33923-25217.csv", 'r') as f:
     catmaid_neurons = []
     for line in f:
         #print(line.rstrip())
@@ -66,7 +68,7 @@ with open("/Users/nadine/Documents/paper/single-larva/generated-data/2-hop_downs
 
 matched = set(catmaid_neurons) & set(ids_of_interest)
 # %%
-
+#??
 with open("/Users/nadine/Documents/paper/single-larva/generated-data/pre-post_lines.csv", 'r') as f:
     spliline_neurons = []
     for line in f:
