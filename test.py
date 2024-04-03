@@ -43,30 +43,45 @@ us_particular_neuron = us_2hop_neurons[bool_array]
 a = [1, 2, 3, 5, 4, 22]
 b = [9, 8, 7, 6, 5, 22]
 m = set(a) & set(b)
-# %%
 
-with open("/Users/nadine/Documents/paper/single-larva/Left-skids_NBLAST_CleanBrain.csv", 'r') as f:
+# %%
+# open left skeleton ID of identified split-neurons from CATMAID: /Users/nadine/Documents/paper/single-larva/Left-skids_NBLAST_CleanBrain.csv
+with open("/Users/nadine/Documents/paper/single-larva/generated-data/neuron-skids_nr1099uniqueIDneuron.csv", 'r') as f:
     ids_of_interest = []
     _ = f.readline() # skip first line
     for line in f:
         id = line.rstrip()
         ids_of_interest.append(id)
-#print(ids_of_interest)        
-
+#print(ids_of_interest)     
+#    
 # %%
-
-with open("/Users/nadine/Documents/paper/single-larva/generated-data/2-hop_upstream_nrtest_35-29_1099-neuron33923-25217.csv", 'r') as f:
+''''
+# open skeleton ID of nr 1099 unique neurons/1hop from CATMAID "skeleton_id"
+with open("/Users/nadine/Documents/paper/single-larva/skeleton_ID_nr1099-unique.csv", 'r') as f:
+    ids_of_interest = []
+    _ = f.readline() # skip first line
+    for line in f:
+        id = line.rstrip()
+        ids_of_interest.append(id)
+print(ids_of_interest)   
+'''
+# %%
+#e.g., /Users/nadine/Documents/paper/single-larva/generated-data/1-hop_downstream_potential_nr-test23_1099-neuron48991_b.csv
+with open("/Users/nadine/Documents/paper/single-larva/generated-data/connectivity/2-hop_downstream_nr_59a.csv", 'r') as f:
     catmaid_neurons = []
     for line in f:
         #print(line.rstrip())
         id, _ = line.rstrip().lstrip().split(',') #remove spaces and new lines on left and right side, and splitting (split returns list of strings) on the comma. '_' we ignore this variable 
         
         catmaid_neurons.append(id)
-#print(catmaid_neurons)    
+print(catmaid_neurons)    
+
 # %%
 # compare two lists. output matched values
 
 matched = set(catmaid_neurons) & set(ids_of_interest)
+
+print(matched)
 # %%
 #??
 with open("/Users/nadine/Documents/paper/single-larva/generated-data/pre-post_lines.csv", 'r') as f:
@@ -81,3 +96,5 @@ with open("/Users/nadine/Documents/paper/single-larva/generated-data/pre-post_li
 # output: remove duplicates in list
 unique = list(set(spliline_neurons))
 # %%
+
+10100020 in upstream[0]
