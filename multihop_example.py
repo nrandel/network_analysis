@@ -21,14 +21,32 @@ pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
 # downstream
 # when looking at multihop connectivity with a threshold using individual neuron edge list (not the paired list); TESTED AND WORKING
 
-neurons = pymaid.get_skids_by_annotation('nr 59a') # Tel-like 10, nr FW: forward triggering cells; nr TC: turn triggereing cells
+neurons = pymaid.get_skids_by_annotation('mw LHN') # Tel-like 10, nr FW: forward triggering cells; nr TC: turn triggereing cells
 
 # use pregenerated edge list
 edges = Promat.pull_edges(type_edges='ad', threshold=0.01, data_date=data_date_A1_brain, pairs_combined=False)
+#edges = Promat.pull_edges(type_edges='summed', threshold=0.01, data_date=data_date_A1_brain, pairs_combined=False)
 pairs = Promat.get_pairs(pairs_path=pairs_path) #csv of neuron pairs
 
 # downstream x-hops of Tel-like 10
 downstream = Promat.downstream_multihop(edges=edges, sources=neurons, hops=2, pairs_combined=False, pairs=pairs)
+
+# %%
+#temporary: save download output
+import csv
+
+# Example data (single list)
+
+# Define the filename for the new file
+filename = '/Users/nadine/Documents/paper/test.csv'
+
+# Write data to CSV file
+with open(filename, 'w', newline='') as csvfile:
+    csvwriter = csv.writer(csvfile)
+    csvwriter.writerow(downstream)
+
+print(f'Data has been saved to {filename}')
+
 
 # %%
 # downstream
